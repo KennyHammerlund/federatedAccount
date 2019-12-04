@@ -17,9 +17,19 @@ module.exports = {
     __dirname: false, // if you don't put this is, __dirname
     __filename: false // and __filename return blank or /
   },
+  resolve: {
+    // This is needed to use .graphql files and havewebpack bundle them
+    extensions: [".js", ".graphql", ".gql"]
+  },
   externals: [nodeExternals()], // Need this to avoid error when working with Express
   module: {
     rules: [
+      // This is needed to use .graphql files and havewebpack bundle them
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: "graphql-tag/loader"
+      },
       {
         test: /\.js?$/,
         use: [

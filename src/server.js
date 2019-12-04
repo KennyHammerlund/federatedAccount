@@ -1,26 +1,29 @@
-import { importSchema } from "graphql-import";
-import { ApolloServer, AuthenticationError } from "apollo-server";
+import { ApolloServer } from "apollo-server";
 import _ from "lodash";
 
+// Needed to create a federationready schema.
+import { buildFederatedSchema } from "@apollo/federation";
+import gql from "graphql-tag";
 import * as resolvers from "./graphs/resolvers";
+import { mergeTypes } from "merge-graphql-schemas";
+import typeDefs from "./graphs/schema";
 
-const typeDefs = importSchema("./src/graphs/schema.graphql");
+// use of graphql-tag/loader in webpack + merge-graphjql-schemas tocreated a typedef
+// ready to use in federated schema
+const mergedDefs = gql`
+  ${mergeTypes(typeDefs)}
+`;
 
-// not required but can be useful if you run multiple servers.
+const test = _.reduce(resolvers, (prev, next) => _.merge(prev, next));
+
 const PORT = process.env.PORT || 2995;
-
 const server = new ApolloServer({
-  typeDefs,
-  context: req => new Context(req),
-  resolvers: _.reduce(resolvers, (prev, next) => _.merge(prev, next)),
-  formatError: err => {
-    if (err.message.startsWith("Context creation failed: ")) {
-      return new AuthenticationError(
-        err.message.replace("Context creation failed: ", "")
-      );
+  schema: buildFederatedSchema([
+    {
+      typeDefs: mergedDefs,
+      resolvers: test
     }
-    return err;
-  },
+  ]),
   playground: true
 });
 
@@ -28,9 +31,3 @@ const server = new ApolloServer({
 server.listen({ port: PORT }).then(({ url }) => {
   console.log(`🚀 Account server running on port ${url}`);
 });
-
-class Context {
-  constructor(request) {
-    this.request = request.req;
-  }
-}

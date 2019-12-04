@@ -1,7 +1,7 @@
-type Query {
-  application: Application
+type Query{
+  accountApplication: AccountApplication
 }
 
-type Application {
-  online: Boolean
+type AccountApplication {
+  accountOnline: Boolean
 }
