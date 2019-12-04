@@ -1,0 +1,13 @@
+type Query {
+  account(input: AccountInput!): Account
+}
+
+type Account {
+  id: ID!
+  displayName: String!
+  token: String!
+}
+
+input AccountInput {
+  displayName: String!
+}

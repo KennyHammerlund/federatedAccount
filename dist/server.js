@@ -86,6 +86,59 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/graphs/account/resolvers.js":
+/*!*****************************************!*\
+  !*** ./src/graphs/account/resolvers.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-runtime/regenerator */ "babel-runtime/regenerator");
+/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! babel-runtime/helpers/asyncToGenerator */ "babel-runtime/helpers/asyncToGenerator");
+/* harmony import */ var babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var jsonwebtoken__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jsonwebtoken */ "jsonwebtoken");
+/* harmony import */ var jsonwebtoken__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jsonwebtoken__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var _this = undefined;
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  Query: {
+    account: function () {
+      var _ref = babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(obj, _ref2, ctx) {
+        var input = _ref2.input;
+        return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                return _context.abrupt("return", {
+                  token: jsonwebtoken__WEBPACK_IMPORTED_MODULE_2___default.a.sign({ name: input.displayname }, "gqlFederated"),
+                  displayName: input.displayName
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, _this);
+      }));
+
+      return function account(_x, _x2, _x3) {
+        return _ref.apply(this, arguments);
+      };
+    }()
+  }
+});
+
+/***/ }),
+
 /***/ "./src/graphs/application/resolvers.js":
 /*!*********************************************!*\
   !*** ./src/graphs/application/resolvers.js ***!
@@ -138,13 +191,17 @@ var _this = undefined;
 /*!*********************************!*\
   !*** ./src/graphs/resolvers.js ***!
   \*********************************/
-/*! exports provided: application */
+/*! exports provided: application, account */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _application_resolvers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./application/resolvers */ "./src/graphs/application/resolvers.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "application", function() { return _application_resolvers__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _account_resolvers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./account/resolvers */ "./src/graphs/account/resolvers.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "account", function() { return _account_resolvers__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
 
 
 
@@ -278,6 +335,17 @@ module.exports = require("babel-runtime/regenerator");
 /***/ (function(module, exports) {
 
 module.exports = require("graphql-import");
+
+/***/ }),
+
+/***/ "jsonwebtoken":
+/*!*******************************!*\
+  !*** external "jsonwebtoken" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("jsonwebtoken");
 
 /***/ }),
 

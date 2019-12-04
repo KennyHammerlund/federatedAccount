@@ -2,3 +2,4 @@ scalar Date
 scalar DateTime
 
 # import Query.* from 'application/schema.graphql'
+# import Query.* from 'account/schema.graphql'
