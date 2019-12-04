@@ -1,14 +1,13 @@
 import { importSchema } from "graphql-import";
 import { ApolloServer, AuthenticationError } from "apollo-server";
 import _ from "lodash";
-import db from "./utils/firebase";
 
 import * as resolvers from "./graphs/resolvers";
 
 const typeDefs = importSchema("./src/graphs/schema.graphql");
 
 // not required but can be useful if you run multiple servers.
-const PORT = process.env.PORT || 2999;
+const PORT = process.env.PORT || 2995;
 
 const server = new ApolloServer({
   typeDefs,
@@ -27,38 +26,11 @@ const server = new ApolloServer({
 
 // Start accepting connections.
 server.listen({ port: PORT }).then(({ url }) => {
-  console.log(`🚀 Apollo server running on port ${url}`);
+  console.log(`🚀 Account server running on port ${url}`);
 });
 
 class Context {
   constructor(request) {
-    const headers = request.req
-      ? request.req.headers
-      : request.connection.context;
-    this.user = headers && headers.user;
     this.request = request.req;
-
-    this.deviceId =
-      headers && headers.deviceid && headers.deviceid.replace(/[.\#\$]/g, "-");
-  }
-
-  get asyncRef() {
-    if (this.deviceId) return this.setRef();
-  }
-
-  async setRef() {
-    const isValue = await db
-      .ref()
-      .child(this.deviceId)
-      .once("value")
-      .then(snap => snap.exists());
-    if (!isValue) {
-      await db
-        .ref()
-        .child(this.deviceId)
-        .set({ delay: 0 });
-    }
-
-    return db.ref(this.deviceId);
   }
 }
